@@ -1,6 +1,6 @@
 # IFAM Game Hub (Jogos WEB IFAM)
 
-> **Status do Projeto:** Concluído   
+> **Status do Projeto:** Concluído ✅  
 > **Acesse o site ao vivo:** [jogos-web-ifam-login-9b5c9.web.app](https://jogos-web-ifam-login-9b5c9.web.app/dashboard.html)
 
 ## Sobre 
@@ -35,10 +35,11 @@ Este é um projeto acadêmico desenvolvido em grupo para o curso técnico de Pro
 
 --- 
 
-## Manual de Execução Local
+## Como Executar localmente
 
-1. Clone o repositório:
+1. Clone o repositório pelo terminal:
    ```bash
-   git clone [https://github.com/seu-usuario/nome-do-repositorio.git](https://github.com/seu-usuario/nome-do-repositorio.git)
-
-2. Execute o arquivo ```index.html```, localizado na raiz do projeto.
+   gh repo clone ArthurCarvalhoCC/GameHub-Web-em-Nuvem-Multijogador
+   ```
+2. Como o projeto utiliza módulos JavaScript (`type="module"`), não abra o arquivo `index.html` com dois cliques. É necessário rodar o projeto através de um servidor local (como a extensão Live Server no VS Code).
+3. Com o servidor local ativo, acesse a página inicial no seu navegador.
