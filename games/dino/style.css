@@ -1,0 +1,338 @@
+/* =========================================================
+   ASSETS BÁSICOS
+   ---------------------------------------------------------
+   Define variáveis base para o CSS
+   ========================================================= */
+:root {
+    --bg-color-1: #e67817;
+    --bg-color-2: #440132;
+    --bg-color-3: #1a03e9;
+    --bg-color-4: #0e0144;
+    --ground-color-1: #edc96e; 
+    --ground-color-2: #753008;
+    --ground-color-3: #e4c167; 
+    --ground-color-4: #754208;
+    --sun-color-1: #ffb006;
+    --sun-color-2: #e55508;
+    --moon-color-1: #f7faff;
+    --moon-color-2: #b9bfd5;
+    
+}
+
+/* =========================================================
+   RESET BÁSICO
+   ---------------------------------------------------------
+   Remove margens e espaçamentos padrão do navegador
+   e ajusta o cálculo de tamanho dos elementos.
+   ========================================================= */
+* {
+    box-sizing: border-box; /* Faz width/height incluir padding e border */
+    margin: 0;              /* Remove margem padrão */
+    padding: 0;             /* Remove espaçamento interno padrão */
+}
+
+/* =========================================================
+   CORPO DA PÁGINA
+   ---------------------------------------------------------
+   Centraliza o conteúdo da página e define o fundo geral.
+   ========================================================= */
+body {
+    background: #222;            /* Fundo escuro para destacar a área do jogo */
+    display: flex;                 /* Ativa o Flexbox */
+    flex-direction: column;        /* Organiza os elementos em coluna */
+    align-items: center;           /* Centraliza horizontalmente */
+    justify-content: center;       /* Centraliza verticalmente */
+    min-height: 100vh;             /* Altura mínima = 100% da altura da tela */
+    font-family: Arial, sans-serif;/* Fonte padrão da página */
+}
+
+/* ==========================================================
+   PASSO 1: O PALCO DO JOGO
+   ----------------------------------------------------------
+   Esta é a área principal onde os elementos do jogo aparecem.
+   ========================================================== */
+#game-board {
+    width: 800px;                                                                   /* Largura fixa da área do jogo */
+    height: 300px;                                                                  /* Altura fixa da área do jogo */      
+    background: linear-gradient(to bottom, var(--bg-color-1), var(--bg-color-2));   /* Cor do céu de fundo */
+    position: relative;                                                             /* Referência para elementos posicionados com absolute */
+    overflow: hidden;                                                               /* Esconde o que sair fora da área do jogo */
+    margin: 20px auto;                                                              /* Espaço externo em cima/baixo e centralização horizontal */
+    border: 3px solid #555;                                                       /* Borda cinza escura ao redor do palco */
+    border-radius: 5px;                                                             /* Cantos levemente arredondados */
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);                                         /* Sombra para dar destaque visual */
+}
+
+/* =========================================================
+   PASSO 2: O CHÃO
+   ---------------------------------------------------------
+   Faixa inferior que representa o solo do jogo.
+   ========================================================= */
+.chao {
+    position: absolute;                                                 /* Posicionamento relativo ao #game-board */
+    bottom: 0;                                                          /* Encostado na parte inferior */
+    left: 0;                                                            /* Começa na borda esquerda */
+    right: 0;                                                           /* Vai até a borda direita */
+    height: 50px;                                                       /* Altura do chão */
+    background: linear-gradient(to bottom, var(--ground-color-1), var(--ground-color-2));  /* Cor de terra */
+    border-top: 4px solid #fff6e3e1;                                  /* Linha superior para destacar o solo */
+}
+
+/* =========================================================
+   PASSO 3: O DINOSSAURO E BOTÃO DE PULO
+   ---------------------------------------------------------
+   Personagem principal do jogo.
+   ========================================================= */
+.dino {
+    position: absolute;      /* Posicionamento livre dentro do palco */
+    bottom: 40px;            /* Fica exatamente acima do chão (que tem 50px de altura) */
+    left: 80px;              /* Distância da borda esquerda */
+    font-size: 40px;         /* Tamanho do caractere/emoji do dinossauro */
+    line-height: 1;          /* Remove espaçamento extra vertical da linha */
+    z-index: 2;              /* Coloca o dinossauro na frente de alguns elementos */
+    scale: 1;                /* O tamanho do dinossauro */
+    transform: scaleX(-1);    /* Inverta o x do dinossauro */
+
+}
+
+.click-checkbox {
+    display: none;
+}
+
+
+
+/* =========================================================
+   ANIMAÇÃO DE PULO
+   ---------------------------------------------------------
+   Faz o dinossauro subir e depois voltar ao chão.
+   ========================================================= */
+
+@keyframes jump {
+    0%   { 
+        bottom: 50px;
+        animation-timing-function: cubic-bezier(0,.42,.1,1);
+    }   /* Começa no chão */
+    50%  { 
+        bottom: 150px; 
+        animation-timing-function: cubic-bezier(1,0,1,.99);
+    }  /* Sobe até 150px */
+    100% { 
+        bottom: 50px; 
+    }   /* Volta para o chão */
+}
+
+
+.jump-anim {
+    animation: jump 0.5s forwards;
+    transform-origin: bottom;
+}
+
+/* =========================================================
+   ANIMAÇÃO DE CORRER
+   ---------------------------------------------------------
+   Faz o dinossauro subir e depois descer rapidamente.
+   ========================================================= */
+
+@keyframes run {
+    0% {
+      bottom: 40px; /* Começa acima da tela */
+      animation-timing-function: cubic-bezier(0,1,1,1);
+    }
+    50% {
+        bottom: 45px;
+        animation-timing-function: cubic-bezier(1,0,1,1);
+    }
+    100% {
+      bottom: 40px; /* Termina no fundo do container */
+    }
+  }
+
+.run-anim {
+    animation: run 0.2s infinite;
+}
+/* =========================================================
+   PASSO 4: O CACTO
+   ---------------------------------------------------------
+   Obstáculo que se move pelo cenário.
+   ========================================================= */
+.cacto {
+    
+    filter:  brightness(100%) saturate(1.2);
+    position: absolute;                        /* Posicionamento livre dentro do palco */
+    bottom: 40px;                              /* Fica no mesmo nível do chão */
+    right: -60px;                              /* Começa fora da tela, à direita */
+    font-size: 60px;                           /* Tamanho do caractere/emoji do cacto */
+    line-height: 1;                            /* Remove espaçamento vertical extra */
+    z-index: 1;                                /* Fica atrás do dinossauro */
+    animation: mover-cacto 2s linear infinite; /* Movimento contínuo do cacto */
+}
+
+/* =========================================================
+   ANIMAÇÃO DO CACTO
+   ---------------------------------------------------------
+   Faz o cacto atravessar a tela da direita para a esquerda.
+   Observação: o valor de "right" cresce para fazer o elemento
+   avançar visualmente para o lado esquerdo da tela.
+   ========================================================= */
+@keyframes mover-cacto {
+    0%   { right: -60px; }  /* Começa fora da área visível */
+    100% { right: 860px; }  /* Percorre toda a largura do palco */
+}
+
+/* =========================================================
+   PASSO 5: EXTRAS
+   ---------------------------------------------------------
+   Elementos visuais adicionais: nuvem, placar e menu.
+   ========================================================= */
+
+/* =========================================================
+   NUVEM
+   ---------------------------------------------------------
+   Elemento decorativo que se move lentamente no céu.
+   ========================================================= */
+.nuvem {
+    position: absolute;                        /* Posicionamento dentro do palco */
+    top: 30px;                                 /* Distância do topo */
+    right: -100px;                             /* Começa fora da tela */
+    font-size: 100px;                           /* Tamanho do emoji/ícone da nuvem */
+    color: #dbdbdbae;                               /* Cor branca */
+    opacity: 0.8;                              /* Leve transparência */
+    z-index: 1;                                /* Fica mais ao fundo */
+    animation: mover-nuvem 15s linear infinite;/* Movimento contínuo e lento */
+}
+
+/* =========================================================
+   ANIMAÇÃO DA NUVEM
+   ---------------------------------------------------------
+   Faz a nuvem atravessar lentamente o cenário.
+   ========================================================= */
+@keyframes mover-nuvem {
+    0%   { right: -100px; } /* Início fora da tela */
+    100% { right: 900px; }  /* Vai até ultrapassar todo o palco */
+}
+
+/* =========================================================
+   ASTRO
+   ---------------------------------------------------------
+   Elemento decorativo que se move muito lentamente no céu.
+   ========================================================= */
+.astro {
+    position: absolute;                           /* Posicionamento dentro do palco */
+    top: 20px;                                    /* Distância do topo */
+    right: -100px;                                /* Começa fora da tela */
+    font-size: 40px;                              /* Tamanho do emoji/ícone da nuvem */
+    filter: saturate(1.2);
+    opacity: 1;                                   /* Leve transparência */
+    z-index: 0;                                   /* Fica mais ao fundo */
+    animation: mover-astro 60s linear infinite; /* Movimento contínuo e lento */
+
+    color: transparent;
+    background: linear-gradient(to bottom, #ffb006, #e55508);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* =========================================================
+   ANIMAÇÃO DO ASTRO
+   ---------------------------------------------------------
+   Faz o astro atravessar lentamente o cenário.
+   ========================================================= */
+@keyframes mover-astro {
+    0%   { right: -100px; } /* Início fora da tela */
+    100% { right: 900px; }  /* Vai até ultrapassar todo o palco */
+}
+
+/* =========================================================
+   PLACAR
+   ---------------------------------------------------------
+   Área que pode exibir pontuação, recorde etc.
+   ========================================================= */
+.placar {
+    background: #111;                     /* Fundo escuro */
+    color: #999;                          /* Cor padrão do texto */
+    font-family: 'Courier New', monospace;  /* Fonte estilo placar digital */
+    font-weight: bold;                      /* Texto em negrito */
+    padding: 10px 20px;                     /* Espaçamento interno */
+    border-radius: 5px;                     /* Cantos arredondados */
+    margin-bottom: 10px;                    /* Espaço abaixo do placar */
+    border: 2px solid #333;               /* Borda discreta */
+    width: 800px;                           /* Mesma largura do palco do jogo */
+    display: flex;                          /* Organiza os itens em linha */
+    justify-content: flex-end;              /* Alinha conteúdo à direita */
+    gap: 40px;                              /* Espaçamento entre os itens */
+}
+
+/* Estilo para partes do placar que precisam de destaque */
+#score {
+    color: #fff; /* Texto em branco para maior destaque */
+}
+
+/* =========================================================
+   MENU DO JOGO
+   ---------------------------------------------------------
+   Área que pode conter links ou botões como "Iniciar",
+   "Reiniciar", "Jogar novamente" etc.
+   ========================================================= */
+.menu-jogo {
+    margin-top: 10px; /* Espaço acima do menu */
+    display: flex;    /* Coloca os itens lado a lado */
+    gap: 10px;        /* Espaço entre os botões/links */
+}
+
+/* =========================================================
+   BOTÕES/ESTILOS DO MENU
+   ---------------------------------------------------------
+   Estiliza os links do menu para parecerem botões.
+   ========================================================= */
+.btn-menu {
+    background: #7e22ce;                        /* Fundo roxo */
+    color: #fff;                                /* Texto branco */
+    padding: 10px 20px;                         /* Espaçamento interno */
+    border-radius: 5px;                         /* Cantos arredondados */
+    text-decoration: none;                      /* Remove sublinhado do link */
+    font-weight: bold;                          /* Texto em negrito */
+    font-size: 16px;                            /* Tamanho da fonte */
+    transition: background 0.2s, transform 0.1s;/* Animação suave ao interagir */
+    border: 2px solid transparent;              /* Borda invisível inicialmente */
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+.btn-menu:hover {
+    background: #6b21a8;      /* Roxo mais escuro */
+    transform: translateY(-2px); /* Faz o botão subir levemente */
+}
+
+/* Efeito ao clicar no botão */
+.btn-menu:active {
+    transform: translateY(0); /* Retorna o botão à posição normal */
+}
+
+/* Estilo de mensagem pop-up */
+.msg { 
+    position: absolute;
+    z-index: 100;
+    font-family: sans-serif; /* Troquei monospace por sans-serif para combinar com o site */
+    
+    /* Centralização */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* Layout e Cores */
+    width: 220px;
+    padding: 20px;
+    background-color: #ffffff; /* Fundo sólido para menos detalhes */
+    border-bottom: 4px solid #505050;
+    
+    text-align: center;
+    color: #212529;
+}
+/* Classes extras */
+.hidden {
+    display: none !important;
+}
+
+.game-paused * {
+    animation-play-state: paused !important;
+}
+

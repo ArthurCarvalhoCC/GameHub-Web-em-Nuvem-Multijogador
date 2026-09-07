@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" contente="width=device-width, initial-scale=1.0">
+	<title> Dino Runner &#129430</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<!-- 1. Placar / HUD -->
+	<div class="placar">
+		<!-- linha original: <p><span id="pontos">00000</span> Recorde: 00100</p>-->
+		<p>
+			<span id="score">00000</span>
+			HI:
+			<span id="high-score">00000</span>
+		</p>
+	</div>
+
+	<!-- Mensagens -->
+	<div id="start-msg" class="msg bg-white bg-opacity-50 rounded-3 text-center fw-bold">
+
+		Clique em <i class="fas fa-play text-success"></i>
+		<span class="text-success"> JOGAR</span>, para começar
+	</div>
+	<!-- 2. O palco do jogo -->
+	<div id="game-board" class="game-paused">
+		<input type="checkbox" id="click-area" class="click-checkbox">
+		<label for="click-area" class="clickable-box"></label>
+		
+		<div class="nuvem">&#9729</div>
+		<div class="dino run-anim">&#129430</div>
+		<div class="chao"></div>
+		<div class="astro">&#9898</div>
+	</div>
+
+	<!-- 3. Menu de navegação -->
+	<nav class="menu-jogo d-flex justify-content-center gap-3 mt-4">
+        
+        <a href="#" class="text-decoration-none">
+            <button id="btn-menu-start" class="btn btn-lg btn-success border border-3 px-4 fw-bold">
+                <i class="fas fa-play me-2"></i> JOGAR  
+            </button>
+        </a>
+
+        <a href="../../index.html" class="text-decoration-none">
+            <button class="btn btn-lg btn-outline-secondary shadow-sm px-4 border-3">
+                <i class="fas fa-sign-out-alt me-2"></i> VOLTAR
+            </button> 
+        </a>
+
+        <a href="#" class="hidden text-decoration-none">
+            <button class="btn btn-lg btn-light border shadow-sm px-4">
+                <i class="fas fa-question me-2"></i> AJUDA
+            </button>
+        </a>
+    </nav>
+	
+	<!-- 4. adds -->
+	<script type="module" src="script.js"></script>
+</body>
+</html>
