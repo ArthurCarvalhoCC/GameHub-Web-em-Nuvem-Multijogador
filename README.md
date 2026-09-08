@@ -1,6 +1,6 @@
 # IFAM Game Hub (Jogos WEB IFAM)
 
-> **Status do Projeto:** Concluído
+> **Status do Projeto:** Concluído.
 > **Acesse o site ao vivo:** [jogos-web-ifam-login-9b5c9.web.app](https://jogos-web-ifam-login-9b5c9.web.app/dashboard.html)
 
 ## Sobre 
