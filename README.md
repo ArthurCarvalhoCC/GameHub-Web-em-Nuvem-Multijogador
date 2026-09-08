@@ -28,6 +28,7 @@ Este é um projeto acadêmico desenvolvido em grupo para o curso técnico de Pro
   * **JavaScript (ES6 Modules)** 
   * **Bootstrap 5**
   * **FontAwesome** 
+
 * **Back-end & Infraestrutura (BaaS - Firebase):**
   * **Firebase Authentication:** Gerenciamento de usuários e sessões.
   * **Firebase Realtime Database:** Armazenamento em nuvem para perfis, históricos e rankings de pontuação.
